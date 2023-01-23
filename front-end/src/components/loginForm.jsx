@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+/* import axios from 'axios'; */
 /* import { Context as LoginContext } from '../context/Provider'; */
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginForm() {
+  /* const api = axios.create({
+    baseURL: 'https://localhost:3001/',
+  }); */
+
+  const navigate = useNavigate();
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [invalidEmail, setInvalidEmail] = useState(false);
   /* const { setLoginForm } = useContext(LoginContext); */
 
-  function sendLoginForm() {
-    const formLogin = { login: loginEmail, password: loginPassword };
-    const response = axios.post('http://localhost:3001/login', formLogin);
-    if (response.message === 'Not found') setInvalidEmail(true);
+  async function sendLoginForm() {
+    /* const formLogin = { login: loginEmail, password: loginPassword }; */
+    /* const response = await fetch('https://pokeapi.co/api/v2/pokemon/ditto'); */
+    /* await axios({ method: 'get', url: 'https://localhost:3001/login' }).then(({ data }) => { console.log(data); }); */
+    /* console.log(response); */
+    /* if (response.message === 'Not found') setInvalidEmail(true); */
   }
+
+  useEffect(() => {
+    fetch('https://localhost:3001/login').then((response) => response.json()).then((data) => console.log(data));
+  });
 
   const buttonValidation = () => {
     const val = /\S+@\S+\.\S+/;
@@ -62,7 +74,7 @@ export default function LoginForm() {
       <button
         data-testid="common_login__button-register"
         type="button"
-        onClick={ () => {} }
+        onClick={ () => navigate('/register') }
       >
         Ainda não tenho conta
       </button>
