@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     quantity: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false
     }
   }, {
@@ -19,14 +19,14 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   SaleProduct.associate = (models) => {
-    models.Product.belongsToMany(models.Sales, {
+    models.Product.belongsToMany(models.Sale, {
       as: 'product',
       through: SaleProduct,
       foreignKey: 'product_id',
       otherKey: 'sales_id',
     });
 
-    models.Sales.belongsToMany(models.Product, {
+    models.Sale.belongsToMany(models.Product, {
       as: 'sale',
       through: SaleProduct,
       foreignKey: 'sales_id',
