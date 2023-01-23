@@ -1,46 +1,57 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 export default function Register() {
+  const dataRef = useRef({});
+
   const submit = (event) => {
-    event.preventDefault();
+    event.preventDefault('');
+    // console.log(dataRef.current);
   };
 
   return (
-    <form>
-      <label
-        htmlFor="name"
-      >
-        Nome
+    <div>
+      <h2>Cadastro</h2>
+      <form>
+        <label
+          htmlFor="name"
+        >
+          Nome
+          <input
+            type="text"
+            data-testid="common_register__input-name"
+            id="name"
+            onChange={ ({ target }) => { dataRef.current.name = target.value; } }
+          />
+        </label>
+        <label
+          htmlFor="email"
+        >
+          Email
+          <input
+            type="email"
+            data-testid="common_register__input-email"
+            id="email"
+            onChange={ ({ target }) => { dataRef.current.email = target.value; } }
+          />
+        </label>
+        <label
+          htmlFor="password"
+        >
+          Senha
+          <input
+            type="password"
+            data-testid="common_register__input-password"
+            id="password"
+            onChange={ ({ target }) => { dataRef.current.password = target.value; } }
+          />
+        </label>
         <input
-          type="text"
-          data-testid="common_register__input-name"
-          id="name"
+          type="submit"
+          data-testid="common_register__input-password"
+          value="CADASTRAR"
+          onClick={ submit }
         />
-      </label>
-      <label
-        htmlFor="email"
-      >
-        Email
-        <input
-          type="email"
-          data-testid=""
-          id="email"
-        />
-      </label>
-      <label
-        htmlFor="password"
-      >
-        Senha
-        <input
-          type="password"
-          id="password"
-        />
-      </label>
-      <input
-        type="submit"
-        value="CADASTRAR"
-        onClick={ submit }
-      />
-    </form>
+      </form>
+    </div>
   );
 }
