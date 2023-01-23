@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-/* import axios from 'axios'; */
+import axios from 'axios';
 /* import { Context as LoginContext } from '../context/Provider'; */
 import { useNavigate } from 'react-router-dom';
 
@@ -16,15 +16,14 @@ export default function LoginForm() {
 
   async function sendLoginForm() {
     /* const formLogin = { login: loginEmail, password: loginPassword }; */
-    /* const response = await fetch('https://pokeapi.co/api/v2/pokemon/ditto'); */
+    try {
+      const { data } = await axios.get('http://localhost:3001/login');
+      console.log(data);
+    } catch (error) { console.log(error); }
     /* await axios({ method: 'get', url: 'https://localhost:3001/login' }).then(({ data }) => { console.log(data); }); */
     /* console.log(response); */
     /* if (response.message === 'Not found') setInvalidEmail(true); */
   }
-
-  useEffect(() => {
-    fetch('https://localhost:3001/login').then((response) => response.json()).then((data) => console.log(data));
-  });
 
   const buttonValidation = () => {
     const val = /\S+@\S+\.\S+/;
