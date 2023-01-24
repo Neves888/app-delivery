@@ -21,13 +21,12 @@ export default function LoginForm() {
       email: loginEmail,
       password: loginPassword,
     };
-    try {
-      const response = await axios.post('http://localhost:3001/login', inputData);
-      const { data } = response;
-      if (response.error === 'User not found') setInvalidEmail(true);
-      setLogIn({ status: true, data });
-      console.log(logIn);
-    } catch (error) { console.log(error.message); }
+    const response = await axios.post('http://localhost:3001/login', inputData);
+    console.log(response);
+    const { data } = response;
+    if (response.error === 'User not found') setInvalidEmail(true);
+    setLogIn({ status: true, data });
+    console.log(logIn);
   }
 
   const buttonValidation = () => {
