@@ -1,13 +1,22 @@
-import React, { useRef } from 'react';
-import validationEmail from '../helpers/validationEmail';
+import React, { useRef, useState, useEffect } from 'react';
+import validationRegister from '../helpers/validationRegister';
+import postRegister from '../services/postRegister';
 
 export default function Register() {
-  const dataRef = useRef({});
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const submitRef = useRef();
+
+  useEffect(() => {
+    const isValid = validationRegister({ name, email, password });
+    submitRef.current.disabled = !isValid;
+  }, [name, email, password]);
 
   const submit = (event) => {
     event.preventDefault('');
-    const isValid = validationEmail(dataRef.current.email);
-    console.log(isValid);
+    postRegister();
   };
 
   return (
@@ -22,7 +31,8 @@ export default function Register() {
             type="text"
             data-testid="common_register__input-name"
             id="name"
-            onChange={ ({ target }) => { dataRef.current.name = target.value; } }
+            value={ name }
+            onChange={ ({ target }) => { setName(target.value); } }
           />
         </label>
         <label
@@ -33,7 +43,8 @@ export default function Register() {
             type="email"
             data-testid="common_register__input-email"
             id="email"
-            onChange={ ({ target }) => { dataRef.current.email = target.value; } }
+            value={ email }
+            onChange={ ({ target }) => { setEmail(target.value); } }
           />
         </label>
         <label
@@ -44,13 +55,16 @@ export default function Register() {
             type="password"
             data-testid="common_register__input-password"
             id="password"
-            onChange={ ({ target }) => { dataRef.current.password = target.value; } }
+            value={ password }
+            onChange={ ({ target }) => { setPassword(target.value); } }
           />
         </label>
         <input
           type="submit"
           data-testid="common_register__input-password"
           value="CADASTRAR"
+          ref={ submitRef }
+          disabled
           onClick={ submit }
         />
       </form>
