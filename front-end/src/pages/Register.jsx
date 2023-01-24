@@ -62,13 +62,14 @@ export default function Register() {
             onChange={ ({ target }) => { setPassword(target.value); } }
           />
         </label>
-        <input
+        <button
           type="submit"
-          data-testid="registerPage.button.register.default"
-          value="CADASTRAR"
+          data-testid="common_register__button-register"
           disabled={ enable }
           onClick={ submit }
-        />
+        >
+          CADASTRAR
+        </button>
       </form>
       <div data-testis={ ERROR_ID }>
         {}
