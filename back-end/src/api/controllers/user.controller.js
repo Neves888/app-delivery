@@ -1,16 +1,15 @@
 const userService = require('../services/user.service');
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (_req, res) => {
   const users = await userService.getAllUsers();
   return res.status(200).json(users);
 };
 
-const findByEmail = async (req, res) => {
-  const { email } = req.body;
-try {
-  await userService.findByEmail({ email });
-  return res.status(200).send();
-} catch (error) { return res.status(error.status).json(error.message); }
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  const user = await userService.login(email, password);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  return res.status(200).json(user);
 };
 
-module.exports = { getAllUsers, findByEmail };
+module.exports = { getAllUsers, login };

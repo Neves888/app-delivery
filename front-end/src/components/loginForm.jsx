@@ -12,18 +12,26 @@ export default function LoginForm() {
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [invalidEmail, setInvalidEmail] = useState(false);
+  const [logIn, setLogIn] = useState({});
   /* const { setLoginForm } = useContext(LoginContext); */
 
   async function sendLoginForm() {
     /* const formLogin = { login: loginEmail, password: loginPassword }; */
+    const inputData = {
+      email: loginEmail,
+      password: loginPassword,
+    };
     try {
-      const { data } = await axios.get('http://localhost:3001/login');
+      const { data } = await axios.post('http://localhost:3001/login', inputData);
+      /* if (response.error === 'User not found') console.log(data); */
       console.log(data);
-    } catch (error) { console.log(error); }
-    /* await axios({ method: 'get', url: 'https://localhost:3001/login' }).then(({ data }) => { console.log(data); }); */
-    /* console.log(response); */
-    /* if (response.message === 'Not found') setInvalidEmail(true); */
+      return setLogIn({ status: true, ...data });
+    } catch (error) { console.log(error.message); }
   }
+
+  /* useEffect = () => {
+    console.log(logIn);
+  }, [logIn]; */
 
   const buttonValidation = () => {
     const val = /\S+@\S+\.\S+/;
