@@ -1,4 +1,7 @@
-export default validationEmail = (email) => {
-  const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
-  return email.test(regex);
+const validationEmail = (email) => {
+  const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  console.log('validando email...');
+  return regex.test(email);
 };
+
+export default validationEmail;

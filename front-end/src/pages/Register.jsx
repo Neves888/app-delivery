@@ -1,11 +1,13 @@
 import React, { useRef } from 'react';
+import validationEmail from '../helpers/validationEmail';
 
 export default function Register() {
   const dataRef = useRef({});
 
   const submit = (event) => {
     event.preventDefault('');
-    // console.log(dataRef.current);
+    const isValid = validationEmail(dataRef.current.email);
+    console.log(isValid);
   };
 
   return (
