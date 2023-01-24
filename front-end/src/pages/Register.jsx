@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import validationRegister from '../helpers/validationRegister';
 import postRegister from '../services/postRegister';
 
@@ -6,17 +6,17 @@ export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const submitRef = useRef();
+  const [enable, setEnable] = useState(true);
 
   useEffect(() => {
     const isValid = validationRegister({ name, email, password });
-    submitRef.current.disabled = !isValid;
+    setEnable(!isValid);
   }, [name, email, password]);
 
-  const submit = (event) => {
-    event.preventDefault('');
-    postRegister();
+  const submit = async (event) => {
+    event.preventDefault();
+    console.log('axios...');
+    await postRegister({ name, email, password });
   };
 
   return (
@@ -63,8 +63,7 @@ export default function Register() {
           type="submit"
           data-testid="common_register__input-password"
           value="CADASTRAR"
-          ref={ submitRef }
-          disabled
+          disabled={ enable }
           onClick={ submit }
         />
       </form>
