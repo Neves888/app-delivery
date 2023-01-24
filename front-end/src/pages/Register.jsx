@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import validationRegister from '../helpers/validationRegister';
 import postRegister from '../services/postRegister';
 
+const ERROR_ID = 'common_register__element-invalid_register';
+
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [enable, setEnable] = useState(true);
+  // const [errorMessage, setErrorMessage] = useState(false);
 
   useEffect(() => {
     const isValid = validationRegister({ name, email, password });
@@ -61,12 +64,15 @@ export default function Register() {
         </label>
         <input
           type="submit"
-          data-testid="common_register__input-password"
+          data-testid="registerPage.button.register.default"
           value="CADASTRAR"
           disabled={ enable }
           onClick={ submit }
         />
       </form>
+      <div data-testis={ ERROR_ID }>
+        {}
+      </div>
     </div>
   );
 }
