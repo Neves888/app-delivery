@@ -7,7 +7,7 @@ const postNewUsers = async (req, res) => {
     const users = await createUsers(newUser);
     return res.status(201).json(users);
   } catch (error) {
-    return res.status(200).json({ message: 'Erro'})
+    return res.status(409).json({ message: 'Erro'})
   }
 };
 

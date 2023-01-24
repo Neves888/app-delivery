@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import validationRegister from '../helpers/validationRegister';
 import postRegister from '../services/postRegister';
 
@@ -9,7 +10,9 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [enable, setEnable] = useState(true);
-  // const [errorMessage, setErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const isValid = validationRegister({ name, email, password });
@@ -18,8 +21,12 @@ export default function Register() {
 
   const submit = async (event) => {
     event.preventDefault();
-    console.log('axios...');
-    await postRegister({ name, email, password });
+    try {
+      await postRegister({ name, email, password });
+      navigate('/customer/products');
+    } catch (error) {
+      setErrorMessage(true);
+    }
   };
 
   return (
@@ -71,9 +78,11 @@ export default function Register() {
           CADASTRAR
         </button>
       </form>
-      <div data-testis={ ERROR_ID }>
-        {}
-      </div>
+      {
+        errorMessage
+          ? <div data-testid={ ERROR_ID }>Menssagem de erro</div>
+          : <div> </div>
+      }
     </div>
   );
 }
