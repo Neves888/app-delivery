@@ -5,9 +5,14 @@ import DeliveryContext from './DeliveryContext';
 function DeliveryProvider({ children }) {
   const [user, setUser] = useState({});
 
+  const setLocalStorage = (key, info) => {
+    localStorage.setItem(key, JSON.stringify(info));
+  };
+
   const contextValue = useMemo(() => ({
     user,
     setUser,
+    setLocalStorage,
   }), [user]);
 
   return (

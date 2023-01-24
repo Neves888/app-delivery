@@ -8,7 +8,7 @@ const getAllUsers = async (_req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await userService.login(email, password);
-  if (!user) return res.status(404).json({ error: 'User not found' });
+  if (!user) return res.status(404).json({ message: 'Not found' });
   return res.status(200).json(user);
 };
 

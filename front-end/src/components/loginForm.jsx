@@ -1,32 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
-/* import { Context as LoginContext } from '../context/Provider'; */
 import { useNavigate } from 'react-router-dom';
+import DeliveryContext from '../context/DeliveryContext';
 
 export default function LoginForm() {
-  /* const api = axios.create({
-    baseURL: 'https://localhost:3001/',
-  }); */
-
   const navigate = useNavigate();
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [invalidEmail, setInvalidEmail] = useState(false);
-  const [logIn, setLogIn] = useState({ status: false });
-  /* const { setLoginForm } = useContext(LoginContext); */
+  /* const [logIn, setLogIn] = useState({ status: false }); */
+  const { setLocalStorage, setUser } = useContext(DeliveryContext);
 
-  async function sendLoginForm() {
-    /* const formLogin = { login: loginEmail, password: loginPassword }; */
+  async function sendLoginForm(email, password) {
     const inputData = {
-      email: loginEmail,
-      password: loginPassword,
+      email,
+      password,
     };
     const response = await axios.post('http://localhost:3001/login', inputData);
-    console.log(response);
     const { data } = response;
-    if (response.error === 'User not found') setInvalidEmail(true);
-    setLogIn({ status: true, data });
-    console.log(logIn);
+    return data;
   }
 
   const buttonValidation = () => {
@@ -67,8 +59,15 @@ export default function LoginForm() {
         type="button"
         data-testid="common_login__button-login"
         disabled={ buttonValidation() }
-        onClick={ () => {
-          sendLoginForm();
+        onClick={ async () => {
+          try {
+            const user = await sendLoginForm(loginEmail, loginPassword);
+            setUser(user);
+            setLocalStorage('user', user);
+            if (user.role === 'seller') return navigate('/seller/orders');
+            if (user.role === 'administrador') return navigate('/admin/manage');
+            return navigate('/customer/products');
+          } catch (error) { setInvalidEmail(true); }
         } }
       >
         Login
