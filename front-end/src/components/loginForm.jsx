@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 /* import { Context as LoginContext } from '../context/Provider'; */
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +12,7 @@ export default function LoginForm() {
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [invalidEmail, setInvalidEmail] = useState(false);
-  const [logIn, setLogIn] = useState({});
+  const [logIn, setLogIn] = useState({ status: false });
   /* const { setLoginForm } = useContext(LoginContext); */
 
   async function sendLoginForm() {
@@ -22,16 +22,13 @@ export default function LoginForm() {
       password: loginPassword,
     };
     try {
-      const { data } = await axios.post('http://localhost:3001/login', inputData);
-      /* if (response.error === 'User not found') console.log(data); */
-      console.log(data);
-      return setLogIn({ status: true, ...data });
+      const response = await axios.post('http://localhost:3001/login', inputData);
+      const { data } = response;
+      if (response.error === 'User not found') setInvalidEmail(true);
+      setLogIn({ status: true, data });
+      console.log(logIn);
     } catch (error) { console.log(error.message); }
   }
-
-  /* useEffect = () => {
-    console.log(logIn);
-  }, [logIn]; */
 
   const buttonValidation = () => {
     const val = /\S+@\S+\.\S+/;

@@ -1,5 +1,5 @@
-const { User } = require('../../database/models');
 const md5 = require('md5');
+const { User } = require('../../database/models');
 const createToken = require('../middlewares/createToken');
 
 const md5Decrypter = (password) => {
