@@ -21,7 +21,7 @@ export default function Register() {
     const isValid = validationRegister({ name, email, password });
     setEnable(!isValid);
     if (isValid) {
-      setSubmitButtonColor('rgb(13, 109, 13)');
+      setSubmitButtonColor('rgb(3, 107, 82)');
     } else { setSubmitButtonColor('rgb(211, 211, 211)'); }
   }, [name, email, password]);
 

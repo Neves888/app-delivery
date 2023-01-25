@@ -10,8 +10,10 @@
 
 .main {
   align-items: center;
-  background-color: #e5e5e5;
-  box-shadow: 5px 5px 5px rgb(160, 160, 160);
+  background-color: rgb(242, 255, 252);
+  border: solid 1px rgb(177, 194, 190);
+  box-shadow: 1px 5px 5px rgb(160, 160, 160);
+  border-radius: 2px;
   display: flex;
   flex-direction: column;
   height: fit-content;
