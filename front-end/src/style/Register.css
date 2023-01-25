@@ -1,0 +1,51 @@
+.root {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+.main {
+  align-items: center;
+  background-color: #e5e5e5;
+  box-shadow: 5px 5px 5px rgb(160, 160, 160);
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  width: 25vw;
+}
+
+form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 80%;
+  width: 90%;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+label input {
+  border: 1px black solid;
+  border-radius: 5px;
+  height: 40px;
+  padding: 5px;
+}
+
+form button {
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: x-large;
+  height: 70px;
+  width: 100%;
+}
