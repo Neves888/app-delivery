@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import validationRegister from '../helpers/validationRegister';
 import postRegister from '../services/postRegister';
 
-import '../style/Register.css';
+// import '../style/Register.css';
 
 const ERROR_ID = 'common_register__element-invalid_register';
 
