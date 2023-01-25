@@ -1,5 +1,14 @@
-const port = process.env.PORT || 3001;
+const http = require('http');
+const { Server } = require('socket.io');
+
 const app = require('./app');
 
-app.listen(port);
-console.log(`Api rodando na porta ${port}`);
+const server = http.createServer(app);
+
+const io = new Server(server);
+
+const port = process.env.PORT || 3001;
+
+io.on('connection', () => { console.log('foi'); });
+
+server.listen(port, () => console.log(`Api rodando na porta ${port}`));
