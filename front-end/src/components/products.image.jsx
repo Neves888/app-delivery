@@ -12,9 +12,9 @@ import Stella from '../images/DRINKS/Stella-Artois-275ml.jpeg';
 
 const ProductsList = [
   {
-    id: 1,
-    name: 'Skol Lata 250ml',
-    price: 2.20,
+    id: 14564,
+    name: 'Coca 2500ml',
+    price: 10.20,
     url_image: Skol250,
   },
   { id: 2,
