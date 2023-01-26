@@ -1,22 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 
-const Middlewares = require('../middlewares/middlewares');
-
 const loginRouter = require('./routes/user.router');
-const { corsOptions } = require('../utils/utils');
-
 const routes = require('./routes');
 
 const app = express();
 
-app.use(express.urlencoded({ extended: false }));
-
 app.use(express.json());
 
-app.use(Middlewares.corsOrigin);
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(routes);
 
