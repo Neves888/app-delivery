@@ -62,10 +62,11 @@ export default function LoginForm() {
         onClick={ async () => {
           try {
             const user = await sendLoginForm(loginEmail, loginPassword);
+            console.log(user);
             setUser(user);
             setLocalStorage('user', user);
             if (user.role === 'seller') return navigate('/seller/orders');
-            if (user.role === 'administrador') return navigate('/admin/manage');
+            if (user.role === 'administrator') return navigate('/admin/manage');
             return navigate('/customer/products');
           } catch (error) { setInvalidEmail(true); }
         } }
