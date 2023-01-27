@@ -1,19 +1,24 @@
 import React, { useContext } from 'react';
-// import { CartContext } from '../context/CartContext';
+import { CartContext } from '../context/CartContext';
 
-export default function CartProducts() {
-  // const { totalPrice, setTotalPrice, listProducts } = useContext(CartContext);
-
-  // const price = listProducts.reduce((acc, cur) => acc.price + cur.price);
-  // console.log(price);
-  // console.log(listProducts);
-  // setTotalPrice(price);
+export default function CartButton() {
+  const { totalPrice } = useContext(CartContext);
 
   return (
     <div>
-      <button data-testid="customer_products__button-cart" type="button">
+      <button
+        data-testid="customer_products__button-cart"
+        type="button"
+        style={ {
+          position: 'fixed',
+          bottom: '10px',
+          left: '80%',
+        } }
+      >
         <p data-testid="customer_products__checkout-bottom-value">
-          {`Ver carrinho: R$${0}`}
+          Ver carrinho:
+          {' '}
+          {`R$${totalPrice}`}
         </p>
       </button>
     </div>

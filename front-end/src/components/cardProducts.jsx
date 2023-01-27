@@ -9,28 +9,41 @@ export default function ProductCard(params) {
     urlImage,
   } = params;
 
-  const {
-    listProducts,
-    setListProducts } = useContext(CartContext);
-
   const [quantity, setQuantity] = useState(0);
 
+  const {
+    listProducts,
+    setListProducts,
+    setTotalPrice } = useContext(CartContext);
+
+  console.log(listProducts);
+
+  const someTotalPrice = () => {
+    const newPrice = listProducts.reduce((acc, cur) => acc + cur.price, 0).toFixed(2);
+    setTotalPrice(Number(newPrice));
+  };
+
   const incrementPrice = (productId, productPrice) => {
-    for (let i = 0; i < quantity; i += 1) {
-      const obj = { id: productId, price: productPrice };
-      listProducts.push(obj);
-      setListProducts(listProducts);
-    }
+    setQuantity(quantity + 1);
+    // for (let i = 0; i <= quantity; i += 1) {
+    //   const obj = { id: productId, price: productPrice };
+    //   listProducts.push(obj);
+    //   setListProducts(listProducts);
+    // }
+    // someTotalPrice();
   };
 
   const decrementPrice = (productId) => {
-    for (let i = 0; i < quantity; i += 1) {
-      const index = listProducts.findIndex((value) => value.id === productId);
-      if (index >= 0) {
-        listProducts.splice(index, 1);
-        setListProducts(listProducts);
-      }
-    }
+    const newQuantity = quantity <= 0 ? 0 : quantity - 1;
+    setQuantity(newQuantity);
+    // for (let i = 0; i <= quantity; i += 1) {
+    //   const index = listProducts.findIndex((value) => value.id === productId);
+    //   if (index >= 0) {
+    //     listProducts.splice(index, 1);
+    //     setListProducts(listProducts);
+    //   }
+    // }
+    // someTotalPrice();
   };
 
   return (
@@ -61,7 +74,8 @@ export default function ProductCard(params) {
           type="number"
           name="quantityCard"
           id="quantityCard"
-          onChange={ (event) => setQuantity(event.target.value) }
+          value={ quantity }
+          onChange={ (event) => setQuantity(Number(event.target.value)) }
         />
         <button
           data-testid={ `customer_products__button-card-add-item-${id}` }

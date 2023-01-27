@@ -62,7 +62,6 @@ export default function LoginForm() {
         onClick={ async () => {
           try {
             const user = await sendLoginForm(loginEmail, loginPassword);
-            console.log(user);
             setUser(user);
             setLocalStorage('user', user);
             if (user.role === 'seller') return navigate('/seller/orders');
