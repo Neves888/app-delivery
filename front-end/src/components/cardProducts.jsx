@@ -1,14 +1,20 @@
 import React from 'react';
 
-export default function ProductCard(id) {
+export default function ProductCard(params) {
+  const {
+    id,
+    name,
+    price,
+    urlImage,
+  } = params;
   return (
     <section>
-      <p data-testid={ `customer_products__element-card-title-${id}` }>Name</p>
-      <p data-testid={ `customer_products__element-card-price-${id}` }>Price</p>
+      <p data-testid={ `customer_products__element-card-title-${id}` }>{ name }</p>
+      <p data-testid={ `customer_products__element-card-price-${id}` }>{ price }</p>
       <img
         data-testid={ `customer_products__img-card-bg-image-${id}` }
-        src=""
-        alt=""
+        src={ urlImage }
+        alt={ name }
       />
       <div>
         <button
