@@ -1,42 +1,42 @@
-import React from 'react';
-// import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import NavBar from '../components/productsNavBar';
+import ProductCard from '../components/cardProducts';
+import CartButton from '../components/cartButton';
 
-export default function NavBar() {
+export default function Products() {
+  const [productList, setProductList] = useState([]);
+  const [storageUser, setStorageUser] = useState([]);
+
+  useEffect(() => {
+    const apiProducts = async () => {
+      const response = await fetch('http://localhost:3001/products');
+      const responseJson = await response.json();
+      const storage = JSON.parse(localStorage.getItem('user'));
+      setStorageUser(storage);
+      setProductList(responseJson);
+    };
+    apiProducts();
+  }, []);
+
   return (
-    <header>
-      <nav>
-        <button
-          data-testid="customer_products__element-navbar-link-products"
-          to="/products"
-          type="button"
-        >
-          Produtos
-        </button>
-
-        <button
-          data-testid="customer_products__element-navbar-link-orders"
-          to="/pedidos"
-          type="button"
-        >
-          Pedidos
-        </button>
-
-        <button
-          data-testid="customer_products__element-navbar-user-full-name"
-          to="/usuario"
-          type="button"
-        >
-          Usuário
-        </button>
-        <button
-          data-testid="customer_products__element-navbar-link-logout"
-          to="/logout"
-          type="button"
-        >
-          Sair
-        </button>
-
-      </nav>
-    </header>
+    <div>
+      <NavBar
+        userName={ storageUser.name }
+      />
+      <div>
+        {
+          productList.map((products) => (
+            <ProductCard
+              key={ products.id }
+              id={ products.id }
+              name={ products.name }
+              price={ products.price }
+              urlImage={ products.url_image }
+            />
+          ))
+        }
+      </div>
+      <CartButton />
+    </div>
   );
 }

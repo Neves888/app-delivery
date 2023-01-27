@@ -5,18 +5,24 @@ import CartButton from '../components/cartButton';
 
 export default function Products() {
   const [productList, setProductList] = useState([]);
+  const [storageUser, setStorageUser] = useState([]);
+
   useEffect(() => {
     const apiProducts = async () => {
       const response = await fetch('http://localhost:3001/products');
       const responseJson = await response.json();
-      // console.log(responseJson);
+      const storage = JSON.parse(localStorage.getItem('user'));
+      setStorageUser(storage);
       setProductList(responseJson);
     };
     apiProducts();
-  });
+  }, []);
+
   return (
     <div>
-      <NavBar />
+      <NavBar
+        userName={ storageUser.name }
+      />
       <div>
         {
           productList.map((products) => (
