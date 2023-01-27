@@ -1,42 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import NavBar from '../components/productsNavBar';
-import ProductCard from '../components/cardProducts';
-import CartButton from '../components/cartButton';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
-export default function Products() {
-  const [productList, setProductList] = useState([]);
-  const [storageUser, setStorageUser] = useState([]);
+export default function NavBar(params) {
+  const { userName } = params;
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const apiProducts = async () => {
-      const response = await fetch('http://localhost:3001/products');
-      const responseJson = await response.json();
-      const storage = JSON.parse(localStorage.getItem('user'));
-      setStorageUser(storage);
-      setProductList(responseJson);
-    };
-    apiProducts();
-  }, []);
+  const logout = () => {
+    localStorage.clear();
+    navigate('/login');
+  };
 
   return (
-    <div>
-      <NavBar
-        userName={ storageUser.name }
-      />
-      <div>
-        {
-          productList.map((products) => (
-            <ProductCard
-              key={ products.id }
-              id={ products.id }
-              name={ products.name }
-              price={ products.price }
-              urlImage={ products.url_image }
-            />
-          ))
-        }
-      </div>
-      <CartButton />
-    </div>
+    <header>
+      <nav>
+        <button
+          data-testid="customer_products__element-navbar-link-products"
+          to="/products"
+          type="button"
+        >
+          Produtos
+        </button>
+
+        <button
+          data-testid="customer_products__element-navbar-link-orders"
+          to="/pedidos"
+          type="button"
+        >
+          Meus pedidos
+        </button>
+
+        <button
+          data-testid="customer_products__element-navbar-user-full-name"
+          to="/usuario"
+          type="button"
+        >
+          { userName }
+        </button>
+        <button
+          data-testid="customer_products__element-navbar-link-logout"
+          to="/logout"
+          type="button"
+          onClick={ logout }
+        >
+          Sair
+        </button>
+
+      </nav>
+    </header>
   );
 }
