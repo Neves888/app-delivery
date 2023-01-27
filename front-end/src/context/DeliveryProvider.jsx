@@ -13,6 +13,7 @@ function DeliveryProvider({ children }) {
     user,
     setUser,
     setLocalStorage,
+    teste: 'Teste',
   }), [user]);
 
   return (
