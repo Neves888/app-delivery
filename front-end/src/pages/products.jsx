@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '../components/productsNavBar';
 import ProductCard from '../components/cardProducts';
 import CartButton from '../components/cartButton';
-import ProductList from '../components/products.image';
 
 export default function Products() {
+  const [productList, setProductList] = useState([]);
+  useEffect(() => {
+    const apiProducts = async () => {
+      const response = await fetch('http://localhost:3001/products');
+      const responseJson = await response.json();
+      // console.log(responseJson);
+      setProductList(responseJson);
+    };
+    apiProducts();
+  });
   return (
     <div>
       <NavBar />
       <div>
         {
-          ProductList.map((products) => (
+          productList.map((products) => (
             <ProductCard
-              product={ products }
               key={ products.id }
               id={ products.id }
               name={ products.name }
