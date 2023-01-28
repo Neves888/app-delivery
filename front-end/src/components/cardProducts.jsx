@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { CartContext } from '../context/CartContext';
 
 export default function ProductCard(params) {
@@ -16,35 +16,27 @@ export default function ProductCard(params) {
     setListProducts,
     setTotalPrice } = useContext(CartContext);
 
-  console.log(listProducts);
-
-  const someTotalPrice = () => {
-    const newPrice = listProducts.reduce((acc, cur) => acc + cur.price, 0).toFixed(2);
+  const someTotalPrice = (newList) => {
+    const newPrice = newList
+      .reduce((acc, cur) => acc + (cur.price * cur.quantity), 0).toFixed(2);
     setTotalPrice(Number(newPrice));
   };
 
-  const incrementPrice = (productId, productPrice) => {
-    setQuantity(quantity + 1);
-    // for (let i = 0; i <= quantity; i += 1) {
-    //   const obj = { id: productId, price: productPrice };
-    //   listProducts.push(obj);
-    //   setListProducts(listProducts);
-    // }
-    // someTotalPrice();
-  };
+  useEffect(() => {
+    const newList = listProducts.map((product) => {
+      if (id === product.id) {
+        return {
+          ...product,
+          quantity,
+        };
+      }
+      return product;
+    });
+    setListProducts(newList);
+    someTotalPrice(newList);
+  }, [quantity]);
 
-  const decrementPrice = (productId) => {
-    const newQuantity = quantity <= 0 ? 0 : quantity - 1;
-    setQuantity(newQuantity);
-    // for (let i = 0; i <= quantity; i += 1) {
-    //   const index = listProducts.findIndex((value) => value.id === productId);
-    //   if (index >= 0) {
-    //     listProducts.splice(index, 1);
-    //     setListProducts(listProducts);
-    //   }
-    // }
-    // someTotalPrice();
-  };
+  // console.log(listProducts);
 
   return (
     <section>
@@ -65,7 +57,8 @@ export default function ProductCard(params) {
           data-testid={ `customer_products__button-card-rm-item-${id}` }
           type="button"
           name="remove"
-          onClick={ () => decrementPrice(id) }
+          onClick={ quantity <= 0
+            ? () => setQuantity(0) : () => setQuantity(quantity - 1) }
         >
           -
         </button>
@@ -81,7 +74,7 @@ export default function ProductCard(params) {
           data-testid={ `customer_products__button-card-add-item-${id}` }
           type="button"
           name="add"
-          onClick={ () => incrementPrice(id, Number(price)) }
+          onClick={ () => setQuantity(quantity + 1) }
         >
           +
         </button>
