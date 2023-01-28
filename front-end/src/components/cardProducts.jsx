@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { CartContext } from '../context/CartContext';
 
 export default function ProductCard(params) {
   const {
@@ -9,6 +10,33 @@ export default function ProductCard(params) {
   } = params;
 
   const [quantity, setQuantity] = useState(0);
+
+  const {
+    listProducts,
+    setListProducts,
+    setTotalPrice } = useContext(CartContext);
+
+  const someTotalPrice = (newList) => {
+    const newPrice = newList
+      .reduce((acc, cur) => acc + (cur.price * cur.quantity), 0).toFixed(2);
+    setTotalPrice(Number(newPrice));
+  };
+
+  useEffect(() => {
+    const newList = listProducts.map((product) => {
+      if (id === product.id) {
+        return {
+          ...product,
+          quantity,
+        };
+      }
+      return product;
+    });
+    setListProducts(newList);
+    someTotalPrice(newList);
+  }, [quantity]);
+
+  // console.log(listProducts);
 
   return (
     <section>
@@ -29,7 +57,8 @@ export default function ProductCard(params) {
           data-testid={ `customer_products__button-card-rm-item-${id}` }
           type="button"
           name="remove"
-          onClick={ () => setQuantity(quantity - 1) }
+          onClick={ quantity <= 0
+            ? () => setQuantity(0) : () => setQuantity(quantity - 1) }
         >
           -
         </button>
@@ -38,7 +67,8 @@ export default function ProductCard(params) {
           type="number"
           name="quantityCard"
           id="quantityCard"
-          value={ quantity < 0 ? 0 : quantity }
+          value={ quantity }
+          onChange={ (event) => setQuantity(Number(event.target.value)) }
         />
         <button
           data-testid={ `customer_products__button-card-add-item-${id}` }

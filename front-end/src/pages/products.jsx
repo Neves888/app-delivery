@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NavBar from '../components/productsNavBar';
 import ProductCard from '../components/cardProducts';
 import CartButton from '../components/cartButton';
+import CartProvider from '../context/CartContext';
 
 export default function Products() {
   const [productList, setProductList] = useState([]);
@@ -19,7 +20,7 @@ export default function Products() {
   }, []);
 
   return (
-    <div>
+    <CartProvider>
       <NavBar
         userName={ storageUser.name }
       />
@@ -37,6 +38,6 @@ export default function Products() {
         }
       </div>
       <CartButton />
-    </div>
+    </CartProvider>
   );
 }
